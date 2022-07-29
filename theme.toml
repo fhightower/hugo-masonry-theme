@@ -1,0 +1,17 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+
+name = "Masonry"
+license = "MIT"
+licenselink = "https://github.com/fhightower/hugo-masonry-theme/blob/main/LICENSE"
+description = "A simple, extensible Hugo theme leveraging Masonry (https://masonry.desandro.com/) to provide a beautiful, elegant grid layout"
+homepage = "https://github.com/fhightower/hugo-masonry-theme"
+tags = ["Blog", "Responsive", "Minimal", "Light", "Portfolio", "Gallery"]
+features = ["Grid", "Cards"]
+min_version = "0.41.0"
+
+[author]
+  name = "Floyd Hightower"
+  homepage = "https://hightower.space/"
+
