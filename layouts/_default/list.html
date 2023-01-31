@@ -11,11 +11,11 @@
 		    {{ .Scratch.Set "index" $index }}
 			{{ partial "grid-item.html" . }}
 		{{ end }}
-	{{ else }}
-		{{ range .Pages.ByPublishDate.Reverse }}
-			{{ partial "grid-item.html" . }}
-		{{ end }}
-	{{ end }}
+    {{ else }}
+        {{ range .Data.Pages }}
+            {{ partial "grid-item.html" . }}
+        {{ end }}
+    {{ end }}
 
 	<style>
 		:root {
