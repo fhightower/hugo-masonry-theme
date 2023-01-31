@@ -7,7 +7,7 @@
         {{- block "main" . }}{{- end }}
         </div>
     </body>
-    <footer>
+    {{ if .Site.Params.showFooter }}
         {{- partial "footer.html" . -}}
-    </footer>
+    {{ end }}
 </html>
