@@ -6,7 +6,7 @@
 	<div class="gutter-sizer"></div>
 
 	{{ if .Page.IsHome }}
-		{{ range $index, $element := .Site.RegularPages }}
+        {{ range $index, $element := where .Site.RegularPages "Type" "posts" }}
 			<!-- pass index into grid-item partial -->
 		    {{ .Scratch.Set "index" $index }}
 			{{ partial "grid-item.html" . }}
