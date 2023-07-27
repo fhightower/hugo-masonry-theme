@@ -4,17 +4,18 @@
 {{ end }}
 <!-- For tags and categories, the publishdate's year is 1 - in such cases, we don't want to show the published date -->
 {{ if ne .PublishDate.Year 1 }}
-	{{ $dateTime := .PublishDate.Format "2006-01-02" }}
+	{{ $dateTime := .PublishDate.Format "2006-01-13" }}
 	{{ $dateFormat := .Site.Params.dateFormat | default "January 2, 2006" }}
 	<time datetime="{{ $dateTime }}">{{ .PublishDate.Format $dateFormat }}</time>
 {{ end }}
-{{ with .Params.tags }}
-	<br/>
-	Tags:
-	{{ range . }}
-		{{ $href := print (absURL "tags/") (urlize .) }}
-		<a href="{{ $href }}">{{ . }}</a>
-	{{ end }}
+{{ if .Params.tags }}
+    <br/>
+    Tags:
+    {{ range $i, $e := .Params.tags }}
+        {{- if $i }},&nbsp;{{ end }}
+        {{ $href := print (absURL "tags/") (urlize $e) }}
+        <a href="{{ $href }}">{{ $e }}</a>
+    {{- end }}
 {{ end }}
 {{ with .Params.categories }}
 	<br/>
