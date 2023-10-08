@@ -46,13 +46,22 @@
 	</style>
 
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+
     <script>
-        // init Masonry after all images have loaded
-        var $grid = $('.grid').imagesLoaded( function() {
-            $grid.masonry({
+        document.addEventListener("DOMContentLoaded", function () {
+            var grid = document.querySelector('.grid');
+            var masonry = new Masonry(grid, {
                 itemSelector: '.grid-item',
                 percentPosition: true,
-                columnWidth: '.grid-sizer'
+                columnWidth: '.grid-sizer',
+                gutter: ".gutter-sizer",
+                horizontalOrder: true,
+            });
+
+            // Refresh the layout after images are loaded
+            imagesLoaded(grid).on('progress', function () {
+                masonry.layout();
             });
         });
     </script>
