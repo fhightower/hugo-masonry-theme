@@ -3,13 +3,16 @@
 {{ partial "metadata.html" . }}
 <br><br>
 
-{{ partial "image.html" .Params.defaultImage }}
+{{ $context := dict "base" .RelPermalink "imageName" .Params.defaultImage }}
+{{ partial "image.html" $context }}
 
 {{ .Content }}
 
+{{ $basePermalink := .RelPermalink }}
 {{ with .Params.images }}
     {{ range . }}
-	{{ partial "image.html" . }}
+        {{ $context := dict "base" $basePermalink "imageName" . }}
+        {{ partial "image.html" $context }}
     {{ end }}
 {{ end }}
 
@@ -21,4 +24,5 @@
 </style>
 
 {{ end }}
+
 

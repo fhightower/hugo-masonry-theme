@@ -1,4 +1,4 @@
-{{ $indexes := "1 4 5 9 14" }}
+{{ $indexes := "4 5 8" }}
 <!-- if the index is in one of the indexes defined above, make the grid item doubly-wide -->
 {{ if in $indexes (.Scratch.Get "index") }}
 <div class="grid-item grid-item--width2">
@@ -6,7 +6,8 @@
 <div class="grid-item">
 {{ end }}
 	<a class="title" href="{{ .RelPermalink }}">
-		{{ partial "image.html" .Params.defaultImage }}
+        {{ $context := dict "base" .RelPermalink "imageName" .Params.defaultImage }}
+        {{ partial "image.html" $context }}
 		<h3>{{ .Title }}</h3>
 	</a>
 
@@ -30,3 +31,4 @@
 		border-radius: 5px;
 	}
 </style>
+
