@@ -4,16 +4,42 @@
 	<div class="grid" data-masonry='{"percentPosition": true, "columnWidth": ".grid-sizer", "itemSelector": ".grid-item", "gutter": ".gutter-sizer", "horizontalOrder": true}'>
 	<div class="grid-sizer"></div>
 	<div class="gutter-sizer"></div>
+    {{ $nonPaginatedPages := slice "Tags" "Categories"}}
 
-	{{ if .Page.IsHome }}
-        {{ range $index, $element := sort (where .Site.RegularPages "Type" "posts") "Date" "desc" }}
-			<!-- pass index into grid-item partial -->
-		    {{ .Scratch.Set "index" $index }}
-			{{ partial "grid-item.html" . }}
-		{{ end }}
-    {{ else }}
+    {{ if in $nonPaginatedPages .Page.Title }}
         {{ range .Data.Pages }}
             {{ partial "grid-item.html" . }}
+        {{ end }}
+    {{ else }}
+        {{ $paginator := slice }}
+        {{ if .Page.IsHome }}
+            {{ $paginator = .Paginate (where .Site.RegularPages "Type" "==" "posts") }}
+            {{ range $index, $element := sort $paginator.Pages "Date" "desc" }}
+                <!-- pass index into grid-item partial -->
+                {{ .Scratch.Set "index" $index }}
+                {{ partial "grid-item.html" . }}
+            {{ end }}
+        {{ else }}
+            {{ $paginator = .Paginate .Data.Pages }}
+            {{ range $paginator.Pages }}
+                {{ .Scratch.Delete "index" }}
+                {{ partial "grid-item.html" . }}
+            {{ end }}
+        {{ end }}
+
+        {{ if or $paginator.HasPrev $paginator.HasNext}}
+            <div class="paginator">
+              {{ if $paginator.HasPrev }}
+              <a class="link" href="{{ $paginator.Prev.URL }}">← prev</a>
+              {{ else }}
+              <a></a>
+              {{ end }}
+              {{ if $paginator.HasNext }}
+              <a class="link" href="{{ $paginator.Next.URL }}">next →</a>
+              {{ else }}
+              <a></a>
+              {{ end }}
+            </div>
         {{ end }}
     {{ end }}
 
@@ -43,6 +69,14 @@
 		.gutter-sizer {
 		  width: var(--space);
 		}
+
+        .paginator {
+          margin-top: 10rem;
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          text-align: center;
+        }
 	</style>
 
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
@@ -66,4 +100,3 @@
         });
     </script>
 {{ end }}
-
