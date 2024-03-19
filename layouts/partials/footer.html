@@ -1,4 +1,8 @@
 <footer>
-    <p class="text-center">Copyright (c) {{ now.Format "2006"}} {{ .Site.Title }}</p>
+    {{ if .Site.Params.footerText }}
+        <p class="text-center">{{ .Site.Params.footerText }}</p>
+    {{ else }}
+        <p class="text-center">Copyright (c) {{ now.Format "2006"}} {{ .Site.Title }}</p>
+    {{ end }}
 </footer>
 
